@@ -1,4 +1,4 @@
-package data
+package main
 
 import (
 	"testing"
@@ -9,42 +9,33 @@ import (
 func TestCreate(t *testing.T) {
 	t.Run("Scalar", func(t *testing.T) {
 		s, err := Create(5.0)
-		if err != nil {
-			t.Errorf("Expected no error, got %v", err)
-		}
+		assert.NoError(t, err, "Expected no error")
 
-		if s, ok := s.(*Scalar); !ok {
-			t.Errorf("Expected Scalar, got %T", s)
-		}
+		_, ok := s.(*Scalar)
+		assert.True(t, ok, "Expected type *Scalar, got %T", s)
 	})
 
 	t.Run("Vector", func(t *testing.T) {
-		s, err := Create([]float64{5.0, 6.0})
-		if err != nil {
-			t.Errorf("Expected no error, got %v", err)
-		}
+		v, err := Create([]float64{5.0, 6.0})
+		assert.NoError(t, err, "Expected no error")
 
-		if s, ok := s.(*Vector); !ok {
-			t.Errorf("Expected vector, got %T", s)
-		}
+		_, ok := v.(*Vector)
+		assert.True(t, ok, "Expected type *Vector, got %T", v)
 	})
 
 	t.Run("Matrix", func(t *testing.T) {
-		s, err := Create([][]float64{
+		m, err := Create([][]float64{
 			{5.0, 6.0},
 			{7.0, 8.0},
 		})
-		if err != nil {
-			t.Errorf("Expected no error, got %v", err)
-		}
+		assert.NoError(t, err, "Expected no error")
 
-		if s, ok := s.(*Matrix); !ok {
-			t.Errorf("Expected matrix, got %T", s)
-		}
+		_, ok := m.(*Matrix)
+		assert.True(t, ok, "Expected type *Matrix, got %T", m)
 	})
 
 	t.Run("Tensor", func(t *testing.T) {
-		s, err := Create([][][]float64{
+		a, err := Create([][][]float64{
 			{
 				{5.0, 6.0},
 				{7.0, 8.0},
@@ -54,13 +45,10 @@ func TestCreate(t *testing.T) {
 				{11.0, 12.0},
 			},
 		})
-		if err != nil {
-			t.Errorf("Expected no error, got %v", err)
-		}
+		assert.NoError(t, err, "Expected no error")
 
-		if s, ok := s.(*Tensor); !ok {
-			t.Errorf("Expected tensor, got %T", s)
-		}
+		_, ok := a.(*Tensor)
+		assert.True(t, ok, "Expected type *Tensor, got %T", a)
 	})
 }
 
