@@ -1,20 +1,13 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
 	a, _ := Create(5.0)
-	fmt.Printf("%+v\n", a)
 	a.Print()
 
 	b, _ := Create([]float64{5.0, 6.0})
-	fmt.Printf("%+v\n", b)
 	b.Print()
 
 	c, _ := Create([][]float64{{5.0, 6.0, 61.0}, {7.0, 8.0, 8.0}})
-	fmt.Printf("%+v\n", c)
 	c.Print()
 
 	d, _ := Create(
@@ -31,6 +24,20 @@ func main() {
 			},
 		},
 	)
-	fmt.Printf("%+v\n", d)
 	d.Print()
+
+	zeros := Zeros([]int{2, 3})
+	zeros.Print()
+
+	ones := Ones([]int{2, 3})
+	ones.Print()
+
+	rand := Rand([]int{2, 3})
+	rand.Print()
+
+	randn := RandNormal([]int{2, 3})
+	randn.Print()
+
+	eye := Eye(4)
+	eye.Print()
 }

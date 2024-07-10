@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"math/rand/v2"
 )
 
 // Create a new data node. Purpose is to provide a singular entry point to node creation.
@@ -50,14 +51,54 @@ func Create(data interface{}) (Node, error) {
 	}
 }
 
-// func Zeros(shape []int) Node {
-// 	return Node{shape: shape, dims: len(shape)}
-// }
-//
-// func Ones(shape []int) Node {
-// 	return Node{shape: shape, dims: len(shape)}
-// }
-//
-// func Rand(shape []int) Node {
-// 	return Node{shape: shape, dims: len(shape)}
-// }
+func CreateNodeWithShape(shape []int, data []float64) Node {
+	switch len(shape) {
+	case 1:
+		return &Vector{shape: shape, dims: 1, data: data}
+	case 2:
+		return &Matrix{shape: shape, dims: 2, data: data}
+	case 3:
+		return &Tensor{shape: shape, dims: 3, data: data}
+	}
+	panic("Invalid shape for node")
+}
+
+func Zeros(shape []int) Node {
+	data := make([]float64, Product(shape))
+	return CreateNodeWithShape(shape, data)
+}
+
+func Ones(shape []int) Node {
+	data := make([]float64, Product(shape))
+	for i := 0; i < Product(shape); i++ {
+		data[i] = 1
+	}
+	return CreateNodeWithShape(shape, data)
+}
+
+func Rand(shape []int) Node {
+	data := make([]float64, Product(shape))
+	for i := 0; i < Product(shape); i++ {
+		data[i] = rand.Float64()
+	}
+	return CreateNodeWithShape(shape, data)
+}
+
+func RandNormal(shape []int) Node {
+	data := make([]float64, Product(shape))
+	for i := 0; i < Product(shape); i++ {
+		data[i] = rand.NormFloat64()
+	}
+	return CreateNodeWithShape(shape, data)
+}
+
+func Eye(shape int) Node {
+	data := make([]float64, shape*shape)
+	for i := 0; i < shape*shape; i++ {
+		data[i] = 0
+	}
+	for i := 0; i < shape; i++ {
+		data[i*shape+i] = 1
+	}
+	return &Matrix{shape: []int{shape, shape}, dims: 2, data: data}
+}
