@@ -1,7 +1,7 @@
 # cornetto
 
 <p align="center">
-  <img src="assets/logo.png" width="30%" alt="logo">
+  <img src="assets/logo.png" width="30%" height="30%" alt="logo">
 </p>
 
 <p align="center">
